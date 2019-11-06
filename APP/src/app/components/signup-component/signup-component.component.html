@@ -1,0 +1,27 @@
+<div class="page-header"style="background-image: url('../../assets/img/login-image.jpg');">
+  <div class="filter"></div>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-4 ml-auto mr-auto">
+        <div class="card card-register">
+          <h3 class="title mx-auto">SignUp</h3>
+          <form class="register-form" [formGroup]="signUpForm">
+            <label>First Name</label>
+            <input type="text" [ngClass]="{ 'is-invalid': signUpForm.get('firstName').errors?.required && signUpForm.get('firstName').touched   }" class="form-control" placeholder="First Name" formControlName="firstName">
+            <label>Sur Name</label>
+            <input type="text" class="form-control" placeholder="Sur Name"formControlName="lastName">
+            <label>Email</label>
+            <input type="email" class="form-control" placeholder="Email"formControlName="email">
+            <label>Mobile Operator</label>
+            <input type="text" class="form-control" placeholder="Mobile Operator"formControlName="mobileOperator">
+            <label>Mobile Number</label>
+            <input type="text" maxlength="10" class="form-control" placeholder="Mobile Number"formControlName="mobileNumber">
+            <label>Amount</label>
+            <input type="text" class="form-control" placeholder="Amount"formControlName="amount">   
+           </form>
+           <button class="btn btn-danger btn-block btn-round" (click)="register()">Register</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
