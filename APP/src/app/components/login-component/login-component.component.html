@@ -1,19 +1,21 @@
-<div class="page-header" style="background-image: url('../../assets/img/login-image.jpg');">
-  <div class="filter"></div>
-  <div class="container">
+<div class="container">
+  <form [formGroup]="loginForm">
     <div class="row">
-      <div class="col-lg-4 ml-auto mr-auto">
-        <div class="card card-register">
-          <h3 class="title mx-auto">Login</h3>
-          <form class="register-form" [formGroup]="loginForm">
-            <label>Email</label>
-            <input type="text" class="form-control" placeholder="Email" formControlName="email">
-            <label>Password</label>
-            <input type="password" class="form-control" placeholder="Password" formControlName="password">
-          </form>
-          <button class="btn btn-danger btn-block btn-round"(click)="login()">Login</button>
-        </div>
+      <h4>Account Details</h4>
+      <div class="input-group input-group-icon">
+        <input 
+        [ngClass]="{ 'is-invalid': loginForm.get('email').errors?.required && loginForm.get('email').touched   }"
+        type="email" placeholder="Email" formControlName="email">
+        <div class="input-icon"><i class="fa fa-envelope"></i></div>
       </div>
+      <div class="input-group input-group-icon">
+        <input 
+        [ngClass]="{ 'is-invalid': loginForm.get('password').errors?.required && loginForm.get('password').touched   }"
+        type="password" placeholder="Password" formControlName="password">
+        <div class="input-icon"><i class="fa fa-key"></i></div>
+      </div>
+      <button style=" line-height: 1.4;  height: 3.4em;" class="btn btn-info  btn-block btn-round"
+        (click)="login()">Login</button>
     </div>
-  </div>
+  </form>
 </div>

@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, FormControl } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CommonHelperService {
 
-  constructor(private toastr: ToastrService) { }
+  constructor(private toastr: ToastrService, private http:HttpClient) { }
 
   showErrorToast(errorTitle,message,time){
     this.toastr.error(errorTitle,message,{timeOut:time})
@@ -31,4 +33,16 @@ export class CommonHelperService {
         }
       }); 
   }
+
+  getCountry(){
+    return this.http.get("https://restcountries.eu/rest/v2/all");   
+  }
+
+private userStatus = new BehaviorSubject(localStorage.getItem('user'));
+getUserStatus = this.userStatus.asObservable();
+
+setUserStatus(data){
+  this.userStatus.next(data);
+}
+
 }

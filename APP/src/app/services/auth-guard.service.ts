@@ -18,6 +18,6 @@ export class AuthGuardService  implements CanActivate{
     }
     
     isLoggedIn() {
-      return true;
+      return localStorage.getItem('user');
     }
   }

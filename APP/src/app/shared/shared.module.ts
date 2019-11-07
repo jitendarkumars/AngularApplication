@@ -7,6 +7,7 @@ import { AlphabetsOnlyDirective } from './directives/alphabets-only.directive';
   imports: [
     CommonModule
   ],
+  exports:[NumberOnlyDirective,AlphabetsOnlyDirective],
   declarations: [NumberOnlyDirective, AlphabetsOnlyDirective]
 })
 export class SharedModule { }

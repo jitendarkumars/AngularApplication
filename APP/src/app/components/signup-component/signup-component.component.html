@@ -1,27 +1,57 @@
-<div class="page-header"style="background-image: url('../../assets/img/login-image.jpg');">
-  <div class="filter"></div>
-  <div class="container">
+<div class="container">
+  <form [formGroup]="signUpForm">
     <div class="row">
-      <div class="col-lg-4 ml-auto mr-auto">
-        <div class="card card-register">
-          <h3 class="title mx-auto">SignUp</h3>
-          <form class="register-form" [formGroup]="signUpForm">
-            <label>First Name</label>
-            <input type="text" [ngClass]="{ 'is-invalid': signUpForm.get('firstName').errors?.required && signUpForm.get('firstName').touched   }" class="form-control" placeholder="First Name" formControlName="firstName">
-            <label>Sur Name</label>
-            <input type="text" class="form-control" placeholder="Sur Name"formControlName="lastName">
-            <label>Email</label>
-            <input type="email" class="form-control" placeholder="Email"formControlName="email">
-            <label>Mobile Operator</label>
-            <input type="text" class="form-control" placeholder="Mobile Operator"formControlName="mobileOperator">
-            <label>Mobile Number</label>
-            <input type="text" maxlength="10" class="form-control" placeholder="Mobile Number"formControlName="mobileNumber">
-            <label>Amount</label>
-            <input type="text" class="form-control" placeholder="Amount"formControlName="amount">   
-           </form>
-           <button class="btn btn-danger btn-block btn-round" (click)="register()">Register</button>
+      <h4>Account Details</h4>
+      <div class="input-group input-group-icon">
+        <div class="input-group-prepend">
+          <div class="input-icon"><i class="fa fa-user"></i></div>
         </div>
+        <input class="form-multiple" type="text"
+          [ngClass]="{ 'is-invalid': signUpForm.get('firstName').errors?.required && signUpForm.get('firstName').touched   }"
+          placeholder="First Name" formControlName="firstName">
+        <input class="form-multiple" type="text"
+          [ngClass]="{ 'is-invalid': signUpForm.get('lastName').errors?.required && signUpForm.get('lastName').touched   }"
+          placeholder="Last Name" formControlName="lastName">
+      </div>
+      <div class="input-group input-group-icon">
+        <input 
+        [ngClass]="{ 'is-invalid': signUpForm.get('email').errors?.required && signUpForm.get('email').touched   }"
+        type="email" placeholder="Email" formControlName="email">
+        <div class="input-icon"><i class="fa fa-envelope"></i></div>
       </div>
     </div>
-  </div>
+    <div class="row">
+      <div class="input-group">
+          <div class="input-group-append">
+          <select 
+          [ngClass]="{ 'is-invalid': signUpForm.get('countryCode').errors?.required && signUpForm.get('countryCode').touched   }"
+          class="mobileCode" id="inputGroupSelect02" formControlName="countryCode">
+            <ng-container *ngFor="let country of countryList;">
+                <option [value]="country.callingCodes[0]" *ngIf="country.callingCodes[0]" >
+                        {{country.name}} (+{{country.callingCodes[0]}})
+                  </option>
+               </ng-container>
+            </select>
+          </div>
+        <input type="text"   numbersOnly
+        [ngClass]="{ 'is-invalid': signUpForm.get('mobileNumber').errors?.required && signUpForm.get('mobileNumber').touched   }"
+        style=" line-height: 1.4;  height: 3.4em;" maxlength="10" class="form-control"
+          placeholder="Mobile Number" formControlName="mobileNumber">
+        
+      </div>
+      <div class="input-group input-group-icon">
+        <input type="text" 
+        [ngClass]="{ 'is-invalid': signUpForm.get('mobileOperator').errors?.required && signUpForm.get('mobileOperator').touched   }"
+        placeholder="Mobile Operator" formControlName="mobileOperator">
+        <div class="input-icon"><i class="fa fa-user"></i></div>
+      </div>
+      <div class="input-group input-group-icon">
+        <input type="text"  numbersOnly  [ngClass]="{ 'is-invalid': signUpForm.get('amount').errors?.required && signUpForm.get('amount').touched   }"
+         min=1 placeholder="Amount" formControlName="amount">
+        <div class="input-icon"><i class="fa fa-dollar"></i></div>
+      </div>
+    </div>
+    <button style=" line-height: 1.4;  height: 3.4em;" class="btn btn-info  btn-block btn-round"
+      (click)="register()">Register</button>
+  </form>
 </div>

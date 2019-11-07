@@ -11,11 +11,17 @@ import { Router } from '@angular/router';
 })
 export class SignupComponent implements OnInit {
   signUpForm: FormGroup;
+  countryList;
   constructor(private fb:FormBuilder,
               private authenticationService:AuthenticationService,
               private commonHelper:CommonHelperService,
               private router:Router
-    ) { }
+    ) { 
+
+      if(localStorage.getItem('user')){
+        this.router.navigate(['/dashboard'])
+      }
+    }
 
   ngOnInit() {
     this.signUpForm = this.fb.group({
@@ -23,8 +29,13 @@ export class SignupComponent implements OnInit {
       lastName:['',Validators.required],
       email:['',Validators.required],
       mobileOperator:['',Validators.required],
+      countryCode:['',Validators.required],
       mobileNumber:['',Validators.required],
       amount:['',Validators.required]
+    })
+    this.commonHelper.getCountry().subscribe(res=>{
+      this.countryList=res;
+      this.signUpForm.get('countryCode').patchValue(this.countryList[0].callingCodes[0])
     })
   }
   
@@ -40,14 +51,11 @@ export class SignupComponent implements OnInit {
       }
 
       this.authenticationService.register(registerRequest).subscribe(response=>{
-        if(response && response.statusCode==0){
         this.commonHelper.showSuccessToast("Registration Success","Success",5000);
         this.router.navigate(['/dashboard'])
-        }
-        else
-        this.commonHelper.showErrorToast(response.responseMessage,"Error",5000);
+        localStorage.setItem("user",registerRequest.firstName)
+        this.commonHelper.setUserStatus(registerRequest.firstName);
       })
-
     }else{
       this.commonHelper.validateFormFields(this.signUpForm)
     }

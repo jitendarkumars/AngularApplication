@@ -15,7 +15,11 @@ export class LoginComponent implements OnInit {
               private authenticationService:AuthenticationService,
               private commonHelper:CommonHelperService,
               private router:Router
-    ) { }
+    ) { 
+      if(localStorage.getItem('user')){
+        this.router.navigate(['/dashboard'])
+      }
+    }
 
   ngOnInit() {
     this.loginForm = this.fb.group({
@@ -31,12 +35,8 @@ export class LoginComponent implements OnInit {
         password: this.loginForm.get('password').value,
       }
       this.authenticationService.register(loginRequest).subscribe(response=>{
-      if(response && response.statusCode==0){
         this.commonHelper.showSuccessToast("Registration Success","Success",5000);
         this.router.navigate(['/dashboard'])
-        }
-        else
-        this.commonHelper.showErrorToast(response.responseMessage,"Error",5000);
       })
     }else {
      this.commonHelper.validateFormFields(this.loginForm);

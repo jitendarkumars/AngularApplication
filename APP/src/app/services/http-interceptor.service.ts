@@ -2,11 +2,16 @@ import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { catchError, retry } from 'rxjs/operators';
+import { CommonHelperService } from './common-helper.service';
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpInterceptorService implements HttpInterceptor {
+    constructor(private commonHelper:CommonHelperService){
+
+    }
   intercept(
       request: HttpRequest<any>,
       next: HttpHandler
@@ -22,8 +27,9 @@ export class HttpInterceptorService implements HttpInterceptor {
                   } else {
                       // server-side error
                       errorMessage = `Error Status: ${error.status}\nMessage: ${error.message}`;
-                  }
-                  console.log(errorMessage);
+                      this.commonHelper.showErrorToast("Error",errorMessage,5000);
+                    }
+                 
                   return throwError(errorMessage);
               })
           )
